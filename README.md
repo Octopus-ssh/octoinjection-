@@ -12,20 +12,21 @@ this project is an in-band sql injection tool
 #### To download the tool
 
 ```http
-sudo git clone  https://github.com/the-Octopus-Shy/octoinjection-
+ sudo git clone  https://github.com/the-Octopus-Shy/octoinjection-
 ```
 
 #### technical command
 
 ```http
-python3 octoinjection.py <url> <injection point> 
+ python3 octoinjection.py <url> <injection point> 
+
 ```
 
 
 #### practical example of a command
 
 ```http
-python3 octoinjection.py https://0a04009804276397c03f2a6c0082001d.web-security-academy.net   /filter?category=Tech+gifts
+ python3 octoinjection.py https://0a04009804276397c03f2a6c0082001d.web-security-academy.net   /filter?category=Tech+gifts
 ```
 
 
