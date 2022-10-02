@@ -40,5 +40,5 @@ the tool doesn't work for blind sql. Maybe someday there will be a future projec
 
 ## Authors
 
-- [@octopus_shy](https://github.com/the-Octopus-Shy/)
+- [@octopus_shy](https://github.com/Octopus-ssh)
 
