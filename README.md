@@ -3,10 +3,6 @@
 
 this project is an in-band sql injection tool
 
-## Acknowledgements
-
- - [my best friend koala](https://github.com/K0ala-py)
-
 ## Example of use
 
 #### To download the tool
